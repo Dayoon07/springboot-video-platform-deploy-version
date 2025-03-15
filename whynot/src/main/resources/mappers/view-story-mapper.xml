@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.e.d.model.mapper.ViewStoryMapper">
+
+    <resultMap id="ViewStoryResultMap" type="com.e.d.model.vo.ViewStoryVo">
+        <id property="viewStoryId" column="view_story_id"/>
+        <result property="watchedVideoId" column="watched_video_id"/>
+        <result property="viewUserId" column="view_user_id"/>
+        <result property="datetime" column="datetime"/>
+    </resultMap>
+
+    <resultMap id="ViewStoryVideosDtoResultMap" type="com.e.d.model.dto.ViewStoryVideosDto">
+        <association property="viewStoryVo" resultMap="ViewStoryResultMap"/>
+        <association property="videosVo" javaType="com.e.d.model.vo.VideosVo" >
+            <id property="videoId" column="video_id"/>
+            <result property="creator" column="creator"/>
+            <result property="creatorVal" column="creator_val"/>
+            <result property="title" column="title"/>
+            <result property="more" column="more"/>
+            <result property="videoName" column="video_name"/>
+            <result property="videoPath" column="video_path"/>
+            <result property="videoLen" column="video_len" />
+            <result property="imgName" column="img_name"/>
+            <result property="imgPath" column="img_path"/>
+            <result property="createAt" column="create_at"/>
+            <result property="frontProfileImg" column="front_profile_img"/>
+            <result property="videoUrl" column="video_url"/>
+            <result property="views" column="views"/>
+            <result property="likes" column="likes"/>
+            <result property="unlikes" column="unlikes"/>
+            <result property="commentCnt" column="comment_cnt"/>
+            <result property="tag" column="tag"/>
+        </association>
+    </resultMap>
+    
+    <select id="myViewStorySelect" parameterType="long" resultMap="ViewStoryVideosDtoResultMap">
+    	SELECT A.video_id, A.creator, A.title, A.video_name, A.video_path, A.img_name, A.img_path, 
+		       A.create_at, A.front_profile_img, A.video_url, A.views, A.likes, A.comment_cnt, A.tag, A.video_len, 
+		       MAX(B.datetime) AS latest_view_datetime 
+		FROM WHYNOT_VIDEOS A
+		JOIN WHYNOT_VIEWSTORY B ON A.video_id = B.watched_video_id
+		WHERE B.view_user_id = #{id}
+		GROUP BY A.video_id, A.creator, A.title, A.video_name, A.video_path, A.img_name, A.img_path, 
+		         A.create_at, A.front_profile_img, A.video_url, A.views, A.likes, A.comment_cnt, A.tag, A.video_len 
+		ORDER BY latest_view_datetime DESC
+    </select>
+
+</mapper>

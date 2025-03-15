@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.e.d.model.mapper.SubscriptionsMapper">
+
+	<resultMap id="SubscriptionsResultMap" type="com.e.d.model.vo.SubscriptionsVo">
+	    <id property="subscriptionId" column="subscription_id"/>
+	    <result property="subscriberName" column="subscriber_name"/>
+	    <result property="subscriberId" column="subscriber_id"/>
+	    <result property="subscribingName" column="subscribing_name"/>
+	    <result property="subscribingId" column="subscribing_id"/>
+	    <result property="subscribedAt" column="subscribed_at"/>
+	</resultMap>
+		
+</mapper>

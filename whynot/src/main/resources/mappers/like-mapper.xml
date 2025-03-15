@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.e.d.model.mapper.LikeMapper">
+
+	<resultMap id="LikeResultMap" type="com.e.d.model.vo.LikeVo">
+	    <id property="likeId" column="like_id"/>
+	    <result property="likeVdoId" column="like_vdo_id"/>
+	    <result property="likeVdoName" column="like_vdo_name"/>
+	    <result property="likerId" column="liker_id"/>
+	    <result property="likerName" column="liker_name"/>
+	    <result property="datetime" column="datetime"/>
+	</resultMap>
+	
+	
+	
+</mapper>

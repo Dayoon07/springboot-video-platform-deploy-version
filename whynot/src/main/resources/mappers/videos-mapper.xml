@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.e.d.model.mapper.VideosMapper">
+	
+	<resultMap id="VideosResultMap" type="com.e.d.model.vo.VideosVo">
+	    <id property="videoId" column="video_id"/>
+	    <result property="creator" column="creator"/>
+	    <result property="creatorVal" column="creator_val"/>
+	    <result property="title" column="title"/>
+	    <result property="more" column="more"/>
+	    <result property="videoName" column="video_name"/>
+	    <result property="videoPath" column="video_path"/>
+	    <result property="videoLen" column="video_len" />
+	    <result property="imgName" column="img_name"/>
+	    <result property="imgPath" column="img_path"/>
+	    <result property="createAt" column="create_at"/>
+	    <result property="frontProfileImg" column="front_profile_img"/>
+	    <result property="videoUrl" column="video_url"/>
+	    <result property="views" column="views"/>
+	    <result property="likes" column="likes"/>
+	    <result property="unlikes" column="unlikes"/>
+	    <result property="commentCnt" column="comment_cnt"/>
+	    <result property="tag" column="tag"/>
+	</resultMap>
+	
+	<resultMap id="LikeVideosResultMap" type="com.e.d.model.dto.LikeVideosDto">
+	    <association property="like" javaType="com.e.d.model.vo.LikeVo">
+	        <result column="like_id" property="likeId"/>
+	        <result column="like_vdo_id" property="likeVdoId"/>
+	        <result column="like_vdo_name" property="likeVdoName"/>
+	        <result column="liker_id" property="likerId"/>
+	        <result column="liker_name" property="likerName"/>
+	        <result column="datetime" property="datetime"/>
+	    </association>
+	    
+	    <association property="videos" javaType="com.e.d.model.vo.VideosVo">
+	        <result column="video_id" property="videoId"/>
+	        <result column="creator" property="creator"/>
+	        <result column="creator_val" property="creatorVal"/>
+	        <result column="title" property="title"/>
+	        <result column="more" property="more"/>
+	        <result column="video_name" property="videoName"/>
+	        <result column="video_path" property="videoPath"/>
+	        <result column="video_len" property="videoLen" />
+	        <result column="img_name" property="imgName"/>
+	        <result column="img_path" property="imgPath"/>
+	        <result column="create_at" property="createAt"/>
+	        <result column="front_profile_img" property="frontProfileImg"/>
+	        <result column="video_url" property="videoUrl"/>
+	        <result column="views" property="views"/>
+	        <result column="likes" property="likes"/>
+	        <result column="unlikes" property="unlikes"/>
+	        <result column="comment_cnt" property="commentCnt"/>
+	        <result column="tag" property="tag"/>
+	    </association>
+	</resultMap>
+	
+	<select id="allVideo" resultType="com.e.d.model.vo.VideosVo">
+		SELECT * FROM WHYNOT_VIDEOS ORDER BY VIDEO_ID DESC
+	</select>
+	
+	<select id="search" parameterType="String" resultMap="VideosResultMap">
+		SELECT * FROM whynot_videos 
+		WHERE title LIKE '%' || #{ searchWord } || '%' 
+		OR creator LIKE '%' || #{ searchWord } || '%' 
+		OR more LIKE '%' || #{ searchWord } || '%' 
+		OR tag LIKE '%' || #{ searchWord } || '%'
+	</select>
+	
+	<select id="selectByMyLikeVideo" parameterType="long" resultMap="LikeVideosResultMap">
+	    SELECT * FROM whynot_like A JOIN whynot_videos B
+	    ON A.LIKE_VDO_ID = B.VIDEO_ID
+	    WHERE LIKER_ID = #{ id } 
+	    ORDER BY datetime DESC
+	</select>
+	
+	<select id="sumByMyVideoViews" parameterType="long" resultType="long">
+		SELECT SUM(VIEWS) AS VIEWS FROM WHYNOT_VIDEOS WHERE CREATOR_VAL = #{ creatorVal }
+	</select>
+	
+	<select id="sumByMyVideoLikes" parameterType="long" resultType="long">
+		SELECT SUM(LIKES) AS LIKES FROM WHYNOT_VIDEOS WHERE CREATOR_VAL = #{ creatorVal }
+	</select>
+	
+	<update id="updateLike" parameterType="long">
+		UPDATE whynot_videos SET likes = #{ likes }
+		WHERE video_id = #{ videoId }
+	</update>
+	
+</mapper>

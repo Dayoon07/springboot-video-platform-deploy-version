@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+aside {
+	transition: transform 0.3s ease-in-out;
+}
+
+#recent-videos {
+	max-height: none; /* 기본 높이 초기화 */
+}
+
+.tab-content {
+	display: none;
+}
+
+.tab-content.active {
+	display: block;
+}
+
+#mainFormId {
+	position: absolute;
+	top: 16px;
+	left: 50%;
+	transform: translate(-50%);
+}
+
+.drop-zone {
+	transition: all 0.3s ease-in-out;
+}
+
+#searchBtn {
+	display: block;
+}
+
+#mobileSearchBar {
+	width: 100%;
+	height: 76px;
+	background-color: white;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#createBioModalFuck {
+	position: absolute;
+	top: 100px;
+	left: 50%;
+	transform: translate(-50%, 0px);
+}
+
+#cdmcibWhatTheFuck {
+	position: absolute;
+	top: 100px;
+	left: 50%;
+	transform: translate(-50%, 0px);
+}
+
+@media ( max-width : 840px) {
+	#mainFormId {
+		display: none;
+	}
+	.loginBtn {
+		display: none;
+	}
+	#createBioModalFuck {
+		position: absolute;
+		top: 100px;
+		left: 50%;
+		transform: translate(-50%, 0px);
+	}
+}

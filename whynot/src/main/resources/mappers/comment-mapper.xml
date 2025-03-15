@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.e.d.model.mapper.CommentMapper">
+
+	<resultMap id="CommentResultMap" type="com.e.d.model.vo.CommentVo">
+	    <id property="commentId" column="comment_id"/>
+	    <result property="commentVideo" column="comment_video"/>
+	    <result property="commentUserid" column="comment_userid"/>
+	    <result property="commenter" column="commenter"/>
+	    <result property="commenterUserid" column="commenter_userid"/>
+	    <result property="commenterProfile" column="commenter_profile"/>
+	    <result property="commenterProfilepath" column="commenter_profilepath"/>
+	    <result property="commentContent" column="comment_content"/>
+	    <result property="datetime" column="datetime"/>
+	</resultMap>
+	
+	<resultMap id="CommentVideosResultMap" type="com.e.d.model.dto.CommentVideosDto">
+	    <association property="commentVo" javaType="com.e.d.model.vo.CommentVo">
+	        <id property="commentId" column="comment_id"/>
+	        <result property="commentVideo" column="comment_video"/>
+	        <result property="commentUserid" column="comment_userid"/>
+	        <result property="commenter" column="commenter"/>
+	        <result property="commenterUserid" column="commenter_userid"/>
+	        <result property="commenterProfile" column="commenter_profile"/>
+	        <result property="commenterProfilepath" column="commenter_profilepath"/>
+	        <result property="commentContent" column="comment_content"/>
+	        <result property="datetime" column="datetime"/>
+	    </association>
+	
+	    <association property="videosVo" javaType="com.e.d.model.vo.VideosVo">
+	        <id property="videoId" column="video_id"/>
+	        <result property="creator" column="creator"/>
+	        <result property="creatorVal" column="creator_val"/>
+	        <result property="title" column="title"/>
+	        <result property="more" column="more"/>
+	        <result property="videoName" column="video_name"/>
+	        <result property="videoPath" column="video_path"/>
+	        <result property="videoLen" column="video_len" />
+	        <result property="imgName" column="img_name"/>
+	        <result property="imgPath" column="img_path"/>
+	        <result property="createAt" column="create_at"/>
+	        <result property="frontProfileImg" column="front_profile_img"/>
+	        <result property="videoUrl" column="video_url"/>
+	        <result property="views" column="views"/>
+	        <result property="likes" column="likes"/>
+	        <result property="commentCnt" column="comment_cnt"/>
+	        <result property="tag" column="tag"/>
+	    </association>
+	</resultMap>
+
+	<select id="findCommentsByKeyword" resultMap="CommentResultMap">
+	    SELECT comment_id, comment_video, comment_userid, commenter, commenter_userid, commenter_profile, commenter_profilepath, comment_content, datetime
+	    FROM whynot_comment
+	    WHERE comment_userid = #{myid}
+	    AND comment_content LIKE '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="findMyAllComment" resultMap="CommentVideosResultMap">
+		SELECT * 
+		FROM whynot_videos A 
+		JOIN whynot_comment B 
+		ON A.video_id = B.comment_video
+		WHERE b.commenter_userid = #{commentId}
+	</select>
+	
+	<select id="selectByMyAllVideoCommentList" resultMap="CommentVideosResultMap">
+	    SELECT 
+	        a.video_id, a.creator, a.creator_val, a.title, a.more, a.video_name, a.video_path, 
+	        a.video_len, a.img_name, a.img_path, a.create_at, 
+	        a.front_profile_img AS front_profile_img, 
+	        a.video_url AS video_url, 
+	        a.views AS views, 
+	        a.likes AS likes, 
+	        a.comment_cnt AS comment_cnt, 
+	        a.tag AS tag, 
+	        b.comment_id AS comment_id, 
+	        b.comment_video AS comment_video, 
+	        b.comment_userid AS comment_userid, 
+	        b.commenter AS commenter, 
+	        b.commenter_userid AS commenter_userid, 
+	        b.commenter_profile AS commenter_profile, 
+	        b.commenter_profilepath AS commenter_profilepath, 
+	        b.comment_content AS comment_content, 
+	        b.datetime AS datetime 
+	    FROM WHYNOT_VIDEOS a 
+	    JOIN WHYNOT_COMMENT b ON a.video_id = b.comment_video 
+	    WHERE b.comment_userid = #{id} 
+	    ORDER BY b.datetime DESC
+	</select>
+	
+</mapper>
