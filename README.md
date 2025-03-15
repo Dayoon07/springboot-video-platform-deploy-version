@@ -10,7 +10,7 @@ cmd 열어서 이 명령어 입력하고 해당 디렉터리에 가면 복사되
 1. 프로젝트 우클릭
 2. Run as -> Maven build
 3. Gorls에는 'package' 입력, profiles에는 'pom.xml' 입력
-4. 그리고 오른쪽 아래에 있는 run 버튼 누르면 console에 <br>
+4. 그리고 오른쪽 아래에 있는 aplly 버튼 누르고 run 버튼 누르면 console에 <br>
     뭐가 뜨면서 어쩌고 저쩌고 할거임
 5. 그 중에 war file이 설치된 경로를 파일 탐색기 열어서 입력하면 그 war파일이 있을거임
 6. war 파일을 'apache-tomcat-버전\webapps' 안에 드래그 하거나 컨트롤C+V 하면 옮겨짐
