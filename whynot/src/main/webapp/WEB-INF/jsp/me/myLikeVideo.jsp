@@ -22,7 +22,7 @@
 	    	<div class="hidden md:flex hover:bg-gray-200 cursor-pointer transition">
 	    		<div class="relative py-4">
 	    			<a href="${ cl }/watch?v=${ mlv.videos.videoUrl }">
-	    				<img src="${ fuck += mlv.videos.imgPath }" alt="poster 쓰고 싶다" width="300" class="px-4 rounded-md cursor-pointer">
+	    				<img src="${ fuck += mlv.videos.imgPath }" alt="poster 쓰고 싶다" width="300" class="max-h-40 px-4 object-contain rounded-md cursor-pointer">
 	    			</a>
 		    		<span class="absolute bottom-4 right-4 bg-black text-white text-xs px-2 py-1 rounded">${ mlv.videos.videoLen }</span>
 	    		</div>
